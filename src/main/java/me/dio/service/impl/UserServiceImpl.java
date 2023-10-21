@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("This Account Number already exists!");
         }
 
-        return userToCreate;
+        return userRepository.save(userToCreate);
     }
     
 }
