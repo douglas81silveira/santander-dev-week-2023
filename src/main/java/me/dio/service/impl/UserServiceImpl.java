@@ -34,5 +34,13 @@ public class UserServiceImpl implements UserService {
 
         return userRepository.save(userToCreate);
     }
-    
+
+    @Override
+    public void delete(Long id) {
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+        } else {
+            throw new IllegalArgumentException("This user does not exist!");
+        }
+    }
 }
