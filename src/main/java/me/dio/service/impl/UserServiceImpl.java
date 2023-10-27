@@ -1,5 +1,6 @@
 package me.dio.service.impl;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.stereotype.Service;
@@ -23,6 +24,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
     public User createUser(User userToCreate) {
         if (userRepository.existsById(userToCreate.getId())) {
             throw new IllegalArgumentException("This User ID already exists!");
@@ -33,6 +39,19 @@ public class UserServiceImpl implements UserService {
         }
 
         return userRepository.save(userToCreate);
+    }
+
+    @Override
+    public User updateUser(User userToUpdate) {
+        if (!userRepository.existsById(userToUpdate.getId())) {
+            throw new IllegalArgumentException("This User does not exists!");
+        }
+
+        if (!userRepository.existsByAccountNumber(userToUpdate.getAccount().getNumber())) {
+            throw new IllegalArgumentException("This Account Number does not exists!");
+        }
+
+        return userRepository.save(userToUpdate);
     }
 
     @Override
